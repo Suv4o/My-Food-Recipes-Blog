@@ -26,7 +26,7 @@ const props = defineProps<{
         <div class="relative overflow-hidden pt-16 lg:pt-20">
             <div class="mx-auto container px-6 lg:px-8">
                 <img
-                    class="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10 w-full aspect-square"
+                    class="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10 w-full aspect-square object-cover"
                     :src="props.blok.image.filename"
                     alt="Blog Image"
                 />
