@@ -8,8 +8,8 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="flex justify-center my-10">
-        <div class="container">
+    <div class="flex justify-center py-24 sm:py-32">
+        <div class="mx-auto container px-6 lg:px-8">
             <div class="text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                     {{ props.blok.title }}
