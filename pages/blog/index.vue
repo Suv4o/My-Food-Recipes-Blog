@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { fetchStoriesBySlug } = useStories();
-const route = useRoute();
-const story = await fetchStoriesBySlug(`${route.path === "/" ? "home" : route.path.replace("/", "")}`);
+const story = await fetchStoriesBySlug("/blog");
 </script>
 
 <template>
