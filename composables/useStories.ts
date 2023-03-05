@@ -21,6 +21,7 @@ export interface Stories {
                 parent_id: number;
                 position: number;
                 published_at: string | null;
+                first_published_at: string | null;
                 slug: string;
                 sort_by_date: string | null;
                 tag_list: string[];
@@ -34,10 +35,9 @@ export interface Stories {
 }
 
 type Story = Stories["data"]["stories"][0];
+type ReactiveStory = Ref<Story>;
 
 export function useStories() {
-    const timestamp = Date.now();
-    const config = useRuntimeConfig();
     const storyblokApi = useStoryblokApi();
 
     async function fetchStories(options = {}) {
@@ -59,7 +59,7 @@ export function useStories() {
             const story = await useAsyncStoryblok(slug, {
                 version: "draft",
             });
-            return story;
+            return story as ReactiveStory;
         } catch (error) {
             console.error(error);
         }
