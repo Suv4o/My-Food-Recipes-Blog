@@ -11,6 +11,11 @@ export default defineNuxtConfig({
     storyblok: {
         accessToken: process.env.STORYBLOK_API_TOKEN,
     },
+    runtimeConfig: {
+        public: {
+            accessToken: process.env.STORYBLOK_API_TOKEN,
+        },
+    },
     typescript: {
         typeCheck: true,
         strict: true,
