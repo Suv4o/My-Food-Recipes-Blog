@@ -1,11 +1,45 @@
 <script setup lang="ts">
 const { stories: blogArticles, fetchStories } = useStories();
+const route = useRoute();
+const { year, month, day } = route.params;
+
+const greaterThenDate = computed(() => {
+    if (year && month && day) {
+        return `${year}-${month}-${day} 00:00`;
+    }
+
+    if (year && month && !day) {
+        return `${year}-${month}-01 00:00`;
+    }
+
+    if (year && !month && !day) {
+        return `${year}-01-01 00:00`;
+    }
+
+    return "";
+});
+
+type ReactiveStory = typeof blogArticles.value[0];
+
+function getBlogArticleUrl(article: ReactiveStory): string {
+    if (!article?.first_published_at) {
+        return "/blog";
+    }
+    const excludeTimeZone = String(article.first_published_at.substring(0, 10).split("-"));
+    const dateObj = new Date(excludeTimeZone);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).length === 1 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1;
+    const day = String(dateObj.getDate()).length === 1 ? `0${dateObj.getDate()}` : dateObj.getDate();
+
+    return `/blog/${year}/${month}/${day}/${article.slug}`;
+}
 
 await fetchStories({
     starts_with: "blog/",
     is_startpage: false,
     per_page: 100,
     sort_by: "first_published_at:desc",
+    first_published_at_gt: greaterThenDate.value,
 });
 </script>
 
@@ -16,7 +50,7 @@ await fetchStories({
                 <NuxtLink
                     v-for="article in blogArticles"
                     :key="article.uuid"
-                    :to="'/' + article.full_slug"
+                    :to="getBlogArticleUrl(article)"
                     class="group"
                 >
                     <div
