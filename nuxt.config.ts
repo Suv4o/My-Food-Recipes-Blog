@@ -15,4 +15,5 @@ export default defineNuxtConfig({
         typeCheck: true,
         strict: true,
     },
+    ssr: false,
 } as any);
